@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useUser } from "@clerk/clerk-react";
 import { useEffect, useState } from "react";
 import {
@@ -9,7 +10,7 @@ import {
   MessageInput,
   Thread,
 } from "stream-chat-react";
-import { StreamChat } from "stream-chat";
+import { Channel as ChannelProps, DefaultGenerics, StreamChat } from "stream-chat";
 import "stream-chat-react/dist/css/v2/index.css";
 import { getToken } from "@/utils/api";
 import { useGetAvailableUsers, useMessageSeller } from "@/utils/mutation";
@@ -24,9 +25,9 @@ const apiKey = import.meta.env.VITE_PUBLIC_REACT_APP_STREAM_KEY || "";
 
 const Chats = () => {
   const { user } = useUser();
-  const [client, setClient] = useState(null);
+  const [client, setClient] = useState<StreamChat<DefaultGenerics> | null>(null);
   const [loading, setLoading] = useState(true);
-  const [activeChannel, setActiveChannel] = useState(null);
+  const [activeChannel, setActiveChannel] = useState<ChannelProps<DefaultGenerics> | null>(null);
   const [showChannelList, setShowChannelList] = useState<boolean>(true);
   const [contacts, setContacts] = useState([]);
 
@@ -98,7 +99,7 @@ const Chats = () => {
     return () => {
       // Cleanup function: disconnect client only if the component is unmounting
       if (client) {
-        client.disconnectUser();
+        client?.disconnectUser();
       }
     };
   }, [userId, user?.fullName]);
@@ -162,7 +163,7 @@ const Chats = () => {
     messageSomeone(rest);
   };
 
-  const CustomChannelPreview = (props) => {
+  const CustomChannelPreview = (props:any) => {
     const { channel } = props;
 
     // Extract recipient details
@@ -205,9 +206,9 @@ const Chats = () => {
     );
   };
 
-  const CustomChannelHeader = ({ activeChannel }) => {
-    const members = Object.values(activeChannel.state.members);
-    const recipient = members.find((member) => member.user.id !== userId)?.user;
+  const CustomChannelHeader = ({ activeChannel }:{activeChannel:objectType}) => {
+    const members = Object.values(activeChannel?.state?.members);
+    const recipient = members.find((member) => member?.user?.id !== userId)?.user;
     const getInitials = (name: string) => {
       if (!name) return "U"; // Default fallback for unnamed users
       const nameParts = name.split(" ");
@@ -259,34 +260,6 @@ const Chats = () => {
     );
   };
 
-  // const deleteEverything = async () => {
-  //   try {
-  //     console.log("Starting cleanup process...");
-
-  //     // Step 1: Delete all channels
-  //     console.log("Deleting all channels...");
-  //     const channels = await serverClient.queryChannels({});
-  //     for (const channel of channels) {
-  //       console.log(`Deleting channel: ${channel.id}`);
-  //       await channel.delete(); // Permanently delete the channel
-  //     }
-  //     console.log("All channels deleted.");
-
-  //     // Step 2: Delete all users
-  //     console.log("Deleting all users...");
-  //     const users = await serverClient.queryUsers({});
-  //     for (const user of users.users) {
-  //       console.log(`Deactivating and deleting user: ${user.id}`);
-  //       await serverClient.deactivateUser(user.id); // Deactivate the user first
-  //       await serverClient.deleteUser(user.id, { hard_delete: true }); // Hard delete the user
-  //     }
-  //     console.log("All users deleted.");
-
-  //     console.log("Cleanup process completed. All data has been removed.");
-  //   } catch (error) {
-  //     console.error("Error during cleanup:", error);
-  //   }
-  // };
 
   if (loading) {
     return (
@@ -346,7 +319,7 @@ const Chats = () => {
           <div>
             <h3 className="font-semibold mb-2">Chats</h3>
             <ChannelList
-              sort={sort}
+              sort={sort||''}
               filters={filters}
               options={options}
               Preview={CustomChannelPreview}

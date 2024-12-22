@@ -1,8 +1,8 @@
 import React from 'react'
-import { carListing } from '../../utils/types'
 import CarSpecification from '../../components/shared/CarSpecification'
 import IconField from '../../add-listing/components/IconField'
 
+type carListing = Record<string, any>;
 const Specification = ({ car,loading }: { car: carListing,loading:boolean }) => {
   return (
     <div>
@@ -15,7 +15,9 @@ const Specification = ({ car,loading }: { car: carListing,loading:boolean }) => 
     {CarSpecification?.map((item,index)=>(
     <div key={index} className=' my-4 flex items-center justify-between'>
     <h2 className='flex gap-2 items-center'><IconField iconName={item.icon} /> {item.label}</h2>
-    <h2>{car&&car[item?.name]}</h2>
+    <h2>{car && car[item.name as keyof carListing]}</h2>;
+
+
     </div>
     ))}
     </div>
