@@ -3,7 +3,6 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import Home from './home'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import Contact from './Contact'
 import { ClerkProvider } from '@clerk/clerk-react'
 import Profile from './profile'
 import AddListing from './add-listing'
@@ -32,10 +31,6 @@ children:[
 {
 path:'/',
 element:<Home/>
-},
-{
-path:'/contact',
-element:<Contact/>
 },
 {
 path:'/profile',

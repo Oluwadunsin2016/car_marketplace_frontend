@@ -1,4 +1,4 @@
-import React from "react";
+
 import { carListing } from "../../utils/types";
 import { HiCalendarDays } from "react-icons/hi2";
 import { BsSpeedometer2 } from "react-icons/bs";

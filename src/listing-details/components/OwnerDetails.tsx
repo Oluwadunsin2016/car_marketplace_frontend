@@ -10,7 +10,6 @@ const OwnerDetails = ({
   creator: user;
   loading: boolean;
   title: string;
-  carId: number | string;
 }) => {
   const { user } = useUser();
   const navigate = useNavigate();

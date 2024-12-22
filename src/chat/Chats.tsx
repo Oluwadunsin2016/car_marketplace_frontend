@@ -29,7 +29,7 @@ const Chats = () => {
   const [loading, setLoading] = useState(true);
   const [activeChannel, setActiveChannel] = useState<ChannelProps<DefaultGenerics> | null>(null);
   const [showChannelList, setShowChannelList] = useState<boolean>(true);
-  const [contacts, setContacts] = useState([]);
+  const [contacts, setContacts] = useState<objectType[]>([]);
 
   const userId = user?.id || "";
   const { data: availableUsers } = useGetAvailableUsers(userId);
@@ -104,7 +104,7 @@ const Chats = () => {
     };
   }, [userId, user?.fullName]);
 
-  const changeChannel = async (channelId: any) => {
+  const changeChannel = async (channelId: string) => {
     try {
       // setLoading(true); // Indicate loading during channel switching
       const chatChannel = client.channel("messaging", channelId);
@@ -119,7 +119,7 @@ const Chats = () => {
   };
 
   const handleChannelSelect = (channel: objectType) => {
-    changeChannel(channel?.data.id);
+    changeChannel(channel?.data?.id||'');
   };
 
   const messageSomeone = async (creator: objectType) => {

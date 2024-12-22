@@ -1,4 +1,4 @@
-import React from 'react'
+
 import { carListing } from '../../utils/types'
 import { formatCurrency } from '../../lib/utils'
 import { Button } from '../../components/ui/button'

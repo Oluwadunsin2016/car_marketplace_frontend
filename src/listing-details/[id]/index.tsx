@@ -1,4 +1,4 @@
-import React from 'react'
+
 import DetailHeader from '../components/DetailHeader'
 import { useParams } from 'react-router-dom'
 import { useGetParticularCar } from '../../utils/mutation'
@@ -49,7 +49,7 @@ console.log(data?.car);
 
 
     {/* Owerners Details */}
-    <OwnerDetails loading={isPending} title={data?.car?.listingTitle} carId={id}  creator={data?.car?.creator}/>
+    <OwnerDetails loading={isPending} title={data?.car?.listingTitle}  creator={data?.car?.creator}/>
 
 </div>
     </div>

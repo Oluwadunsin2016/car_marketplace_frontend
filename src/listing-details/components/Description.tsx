@@ -1,4 +1,4 @@
-import React from 'react'
+
 import { carListing } from '../../utils/types'
 
 const Description = ({ car,loading }: { car: carListing,loading:boolean }) => {

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React from 'react'
+
 import { MdCheck } from 'react-icons/md';
 
 const Features = ({features,loading}:{features:{[key:string]:boolean},loading:boolean}) => {

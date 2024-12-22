@@ -1,4 +1,4 @@
-import React from "react";
+
 import { useSearchParams } from "react-router-dom";
 import { useGetCarsByOptions } from "../utils/mutation";
 import Search from "../components/Search";

@@ -1,4 +1,4 @@
-import React from 'react'
+
 import {useParams } from 'react-router-dom'
 import {useGetCarsByCategory} from '../../utils/mutation'
 import {carListing} from '../../utils/types'

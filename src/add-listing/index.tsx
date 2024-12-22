@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react'
+import { useState,useEffect } from 'react'
 import data from '../components/shared/carDetails.json'
 import features from '../components/shared/features.json'
 import InputField from './components/InputField'
