@@ -1,4 +1,3 @@
-import React from 'react';
 import { category } from './shared/data';
 import { Link } from 'react-router-dom';
 

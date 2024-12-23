@@ -1,4 +1,3 @@
-import React from 'react'
 import { carList } from './shared/FakeData';
 import CarItem from './CarItem';
 import {

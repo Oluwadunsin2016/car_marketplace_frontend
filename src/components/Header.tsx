@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { SignInButton, UserButton, useUser } from '@clerk/clerk-react'
-import React from 'react'
 import { Button } from './ui/button'
 import { Link } from 'react-router-dom'
 

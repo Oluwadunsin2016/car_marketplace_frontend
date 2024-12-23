@@ -168,7 +168,7 @@ const Chats = () => {
     }
   };
 
-  const onChange = (e: Event, contact: any) => {
+  const onChange = (_e: Event, contact: any) => {
     if (!contact) {
       console.error("Invalid contact provided");
       return;
