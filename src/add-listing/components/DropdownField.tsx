@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import {useEffect} from 'react'
 import {
   Select,
   SelectContent,
@@ -37,7 +37,7 @@ useEffect(() => {
 
   return (
     <div>
-    <Select onValueChange={(value:string)=>handleInputChange(item?.name,value)} value={formData[item?.name] || ""} >
+    <Select onValueChange={(value:string)=>handleInputChange(item?.name,value)} value={String(formData[item?.name])} >
   <SelectTrigger className={`${dataError?.[item?.name]?'border-red-500':'border-gray-200'} focus:border-primary rounded`}>
     <SelectValue placeholder={formData[item.name]??item?.label} />
   </SelectTrigger>

@@ -1,4 +1,3 @@
-import React from "react";
 import { IoMdCloseCircle } from "react-icons/io";
 
 type uploadProps={

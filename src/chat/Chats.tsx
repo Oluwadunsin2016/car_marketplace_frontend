@@ -10,7 +10,7 @@ import {
   MessageInput,
   Thread,
 } from "stream-chat-react";
-import { Channel as ChannelProps, DefaultGenerics, StreamChat } from "stream-chat";
+import { Channel as ChannelProps, DefaultGenerics, StreamChat, UserResponse } from "stream-chat";
 import "stream-chat-react/dist/css/v2/index.css";
 import { getToken } from "@/utils/api";
 import { useGetAvailableUsers, useMessageSeller } from "@/utils/mutation";
@@ -22,6 +22,17 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import moment from "moment";
 
 const apiKey = import.meta.env.VITE_PUBLIC_REACT_APP_STREAM_KEY || "";
+
+interface Member {
+  user: UserResponse & { id: string; name?: string; image?: string; online?: boolean; last_active?: string };
+}
+
+interface CustomChannelHeaderProps {
+  activeChannel: ChannelProps;
+  userId: string; // Assuming `userId` is a prop passed to the component
+  setShowChannelList: (value: boolean) => void; // Assuming this is a callback prop
+}
+
 
 const Chats = () => {
   const { user } = useUser();
@@ -107,8 +118,8 @@ const Chats = () => {
   const changeChannel = async (channelId: string) => {
     try {
       // setLoading(true); // Indicate loading during channel switching
-      const chatChannel = client.channel("messaging", channelId);
-      await chatChannel.watch();
+      const chatChannel = client && client.channel("messaging", channelId);
+      await chatChannel?.watch();
       setActiveChannel(chatChannel);
       setShowChannelList(false);
     } catch (error) {
@@ -118,9 +129,12 @@ const Chats = () => {
     }
   };
 
-  const handleChannelSelect = (channel: objectType) => {
-    changeChannel(channel?.data?.id||'');
-  };
+ const handleChannelSelect = (channel: {data: {
+    id: string;
+    [key: string]: string;
+  }}) => {
+    changeChannel(channel.data.id);
+};
 
   const messageSomeone = async (creator: objectType) => {
     if (user) {
@@ -167,7 +181,7 @@ const Chats = () => {
     const { channel } = props;
 
     // Extract recipient details
-    const members = Object.values(channel.state.members);
+     const members: Member[] = Object.values(channel.state.members) as Member[];
     const recipient = members.find((member) => member.user.id !== userId)?.user;
     console.log("members:", members);
 
@@ -188,7 +202,7 @@ const Chats = () => {
       >
         <div className="w-8 h-8 flex-none rounded-full overflow-hidden">
           <img
-            src={recipient?.image || getInitials(recipient?.name)} // Fallback to default image
+            src={recipient?.image || getInitials(recipient?.name ||'')} // Fallback to default image
             alt={recipient?.name || "User"}
             className="w-full h-full object-cover"
           />
@@ -206,18 +220,24 @@ const Chats = () => {
     );
   };
 
-  const CustomChannelHeader = ({ activeChannel }:{activeChannel:objectType}) => {
-    const members = Object.values(activeChannel?.state?.members);
-    const recipient = members.find((member) => member?.user?.id !== userId)?.user;
-    const getInitials = (name: string) => {
-      if (!name) return "U"; // Default fallback for unnamed users
-      const nameParts = name.split(" ");
-      const initials =
-        nameParts.length > 1
-          ? nameParts[0][0].toUpperCase() + nameParts[1][0].toUpperCase()
-          : nameParts[0][0].toUpperCase();
-      return `https://api.dicebear.com/6.x/initials/svg?seed=${initials}`;
-    };
+const CustomChannelHeader: React.FC<CustomChannelHeaderProps> = ({
+  activeChannel,
+  userId,
+  setShowChannelList,
+}) => {
+  const members: Member[] = Object.values(activeChannel.state.members) as Member[];
+
+  const recipient = members.find((member) => member.user.id !== userId)?.user;
+
+  const getInitials = (name?: string): string => {
+    if (!name) return "U"; // Default fallback for unnamed users
+    const nameParts = name.split(" ");
+    const initials =
+      nameParts.length > 1
+        ? nameParts[0][0].toUpperCase() + nameParts[1][0].toUpperCase()
+        : nameParts[0][0].toUpperCase();
+    return `https://api.dicebear.com/6.x/initials/svg?seed=${initials}`;
+  };
 
     const isOnline = recipient?.online;
     const lastSeen = recipient?.last_active
@@ -279,7 +299,7 @@ const Chats = () => {
 
   const filters = { members: { $in: [userId] }, type: "messaging" };
   const options = { presence: true, state: true };
-  const sort = { last_message_at: -1 };
+const sort:any = { last_message_at: -1 }; // Original data
 
   return (
     <Chat client={client} theme="messaging light">
@@ -305,12 +325,12 @@ const Chats = () => {
                   <div className="flex items-center gap-2">
                     <div className="w-8 h-8 rounded-full overflow-hidden flex-none">
                       <img
-                        src={contact?.data?.imageUrl}
+                        src={typeof contact?.data?.imageUrl === "string" ? contact?.data?.imageUrl : undefined}
                         alt=""
                         className="w-full h-full object-contain"
                       />
                     </div>
-                    <p className="line-clamp-1">{contact?.data?.name}</p>
+                    <p className="line-clamp-1">{String(contact?.data?.name || "Unnamed Contact")}</p>
                   </div>
                 );
               }}
@@ -319,7 +339,7 @@ const Chats = () => {
           <div>
             <h3 className="font-semibold mb-2">Chats</h3>
             <ChannelList
-              sort={sort||''}
+              sort={sort}
               filters={filters}
               options={options}
               Preview={CustomChannelPreview}
@@ -335,7 +355,7 @@ const Chats = () => {
             <Channel channel={activeChannel}>
               <Window>
               <div className="flex flex-col h-[calc(76svh-64px)] md:h-[calc(100svh-64px)] overflow-hidden">
-                <CustomChannelHeader activeChannel={activeChannel} />
+                <CustomChannelHeader setShowChannelList={setShowChannelList} userId={userId} activeChannel={activeChannel} />
 
                 {/* Scrollable Message List */}
                 <div className="flex-1 overflow-y-auto customScrollbar">
