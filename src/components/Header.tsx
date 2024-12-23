@@ -4,7 +4,7 @@ import { Button } from './ui/button'
 import { Link } from 'react-router-dom'
 
 const Header = () => {
-const {user,isSignedIn}=useUser()
+const {isSignedIn}=useUser()
 
 const navLinks=[
 {label:'Home', link:'/'},
