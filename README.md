@@ -76,23 +76,7 @@ Make sure you have the following installed:
 - Node.js (v18 or later)
 - npm or yarn
 
-### Installation
-
-```bash
-# Clone the repository
-git clone https://github.com/oluwadunsin2016/car_marketplace_frontend.git
-
-# Navigate to the project directory
-cd car_marketplace_frontend
-
-# Install dependencies
-npm install
-
-# Start development server
-npm run dev
-
-
-# Folder Structure
+### Folder Structure
 src/
 ├── add-listing/            # Add car listing page
 ├── assets/                 # Static images and resources
@@ -107,7 +91,7 @@ src/
 ├── search/                 # Search and category filter components
 
 
-# Routes Overview
+### Routes Overview
 
 | Route                  | Component          | Description                      |
 | ---------------------- | ------------------ | -------------------------------- |
@@ -118,3 +102,18 @@ src/
 | `/search/:category`    | `SearchByCategory` | Search cars by specific category |
 | `/message`             | `Chats`            | Direct messaging interface       |
 | `/listing-details/:id` | `ListingDetails`   | View a specific car listing      |
+
+### Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/oluwadunsin2016/car_marketplace_frontend.git
+
+# Navigate to the project directory
+cd car_marketplace_frontend
+
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
