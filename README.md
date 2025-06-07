@@ -77,6 +77,7 @@ Make sure you have the following installed:
 - npm or yarn
 
 ### Folder Structure
+```
 src/
 ├── add-listing/            # Add car listing page
 ├── assets/                 # Static images and resources
@@ -89,7 +90,7 @@ src/
 ├── profile/                # User profile page
 ├── listing-details/        # Single car listing details
 ├── search/                 # Search and category filter components
-
+```
 
 ### Routes Overview
 
