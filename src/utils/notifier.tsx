@@ -1,4 +1,3 @@
-import React from 'react';
 import toast from 'react-hot-toast';
 import { FaCheckCircle, FaExclamationCircle, FaExclamationTriangle, FaInfoCircle } from 'react-icons/fa';
 
