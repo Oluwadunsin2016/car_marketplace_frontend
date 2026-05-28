@@ -33,6 +33,7 @@ const OwnerDetails = ({
   const navigate = useNavigate();
   const openDirectConversation = useOpenDirectConversation();
   const profileId = getProfileId(creator);
+  const isOwnListing = user?.primaryEmailAddress?.emailAddress === creator?.email;
   
   const messageOwner = async () => {
     if (unavailable) return;
@@ -108,15 +109,17 @@ const OwnerDetails = ({
             </Button>
           ) : null}
 
-          <Button
-            disabled={unavailable || openDirectConversation.isPending || user?.primaryEmailAddress?.emailAddress === creator?.email}
-            size="lg"
-            onClick={messageOwner}
-            className="mt-3 w-full rounded-md bg-slate-950 text-white hover:bg-slate-800"
-          >
-            {openDirectConversation.isPending ? <Loader2 className="size-4 animate-spin" /> : <MessageCircle className="size-4" />}
-            {unavailable ? 'Sold out' : openDirectConversation.isPending ? 'Opening chat...' : 'Message seller'}
-          </Button>
+          {!isOwnListing ? (
+            <Button
+              disabled={unavailable || openDirectConversation.isPending}
+              size="lg"
+              onClick={messageOwner}
+              className="mt-3 w-full rounded-md bg-slate-950 text-white hover:bg-slate-800"
+            >
+              {openDirectConversation.isPending ? <Loader2 className="size-4 animate-spin" /> : <MessageCircle className="size-4" />}
+              {unavailable ? 'Sold out' : openDirectConversation.isPending ? 'Opening chat...' : 'Message seller'}
+            </Button>
+          ) : null}
         </div>
       )}
     </div>

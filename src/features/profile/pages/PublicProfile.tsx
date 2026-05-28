@@ -117,11 +117,11 @@ const PublicProfile = () => {
               </div>
             </div>
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-              {canMessageProfile ? (
+              {canMessageProfile && !isOwnProfile ? (
                 <Button
                   type="button"
                   onClick={messageSeller}
-                  disabled={isOwnProfile || openDirectConversation.isPending}
+                  disabled={openDirectConversation.isPending}
                   className="rounded-md bg-white text-slate-950 hover:bg-slate-100 disabled:opacity-60"
                 >
                   {openDirectConversation.isPending ? <Loader2 className="size-4 animate-spin" /> : <MessageCircle className="size-4" />}
