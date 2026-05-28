@@ -1,7 +1,8 @@
 import axios from "axios"
 
 // const baseUrl = 'https://car-marketplace-backend-six.vercel.app/api/';
-const baseUrl = 'https://car-marketplace-backend.onrender.com/api/';
+// const baseUrl = 'https://car-marketplace-backend.onrender.com/api/';
+const baseUrl = 'https://localhost:4000/api/';
 
 const axiosInstance=axios.create({
 baseURL:baseUrl,

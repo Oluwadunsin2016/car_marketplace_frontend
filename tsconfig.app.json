@@ -27,5 +27,5 @@
       ]
     }
   },
-  "include": ["src", "src/utils/mutation.ts", "src/components/shared/axiosInstance.ts"]
+  "include": ["src"]
 }

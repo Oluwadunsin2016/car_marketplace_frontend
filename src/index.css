@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --radius: 0.75rem;
+}
 
 .mySwiper {
   width: 100%;
